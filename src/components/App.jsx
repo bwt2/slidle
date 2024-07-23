@@ -5,8 +5,59 @@ import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
 import { TileDataContext } from '../contexts/tileDataContext.jsx';
 import { BOARD_DIMENSIONS } from './constants'
 
-function getRandomInt(max) {
+const getRandomInt = (max) => {
   return Math.floor(Math.random() * max);
+}
+
+
+const boardLeftMove = (prevTileData) => {
+  const newTileData = [...prevTileData];
+  for (let i = 1; i < newTileData.length; i++){
+    if (i % (BOARD_DIMENSIONS) === 0){
+      continue;
+    }
+    if (newTileData[i-1] === 0 && newTileData[i] === 1){
+      newTileData[i-1] = 1;
+      newTileData[i] = 0;
+    }
+  }
+  return newTileData;
+}
+
+const boardRightMove = (prevTileData) => {
+  const newTileData = [...prevTileData];
+  for (let i = newTileData.length-2; i > -1; i--){
+    if (i % BOARD_DIMENSIONS === (BOARD_DIMENSIONS - 1)){
+      continue;
+    }
+    if (newTileData[i+1] === 0 && newTileData[i] === 1){
+      newTileData[i+1] = 1;
+      newTileData[i] = 0;
+    }
+  }
+  return newTileData;
+}
+
+const boardUpMove = (prevTileData) => {
+  const newTileData = [...prevTileData];
+  for (let i = BOARD_DIMENSIONS; i < newTileData.length; i++){
+    if (newTileData[i-BOARD_DIMENSIONS] === 0 && newTileData[i] === 1){
+      newTileData[i-BOARD_DIMENSIONS] = 1;
+      newTileData[i] = 0;
+    }
+  }
+  return newTileData;
+}
+
+const boardDownMove = (prevTileData) => {
+  const newTileData = [...prevTileData];
+  for (let i = newTileData.length - BOARD_DIMENSIONS - 1; i >= 0; i--) {
+    if (newTileData[i + BOARD_DIMENSIONS] === 0 && newTileData[i] === 1) {
+      newTileData[i + BOARD_DIMENSIONS] = 1;
+      newTileData[i] = 0;
+    }
+  }
+  return newTileData;
 }
 
 /* 
@@ -21,56 +72,6 @@ function App() {
   const [tileData, setTileData] = useState(() =>
     new Array(BOARD_DIMENSIONS ** 2).fill(null).map(() => getRandomInt(3))
   );
-
-  const boardLeftMove = (prevTileData) => {
-    const newTileData = [...prevTileData];
-    for (let i = 1; i < newTileData.length; i++){
-      if (i % (BOARD_DIMENSIONS) === 0){
-        continue;
-      }
-      if (newTileData[i-1] === 0 && newTileData[i] === 1){
-        newTileData[i-1] = 1;
-        newTileData[i] = 0;
-      }
-    }
-    return newTileData;
-  }
-
-  const boardRightMove = (prevTileData) => {
-    const newTileData = [...prevTileData];
-    for (let i = newTileData.length-2; i > -1; i--){
-      if (i % BOARD_DIMENSIONS === (BOARD_DIMENSIONS - 1)){
-        continue;
-      }
-      if (newTileData[i+1] === 0 && newTileData[i] === 1){
-        newTileData[i+1] = 1;
-        newTileData[i] = 0;
-      }
-    }
-    return newTileData;
-  }
-
-  const boardUpMove = (prevTileData) => {
-    const newTileData = [...prevTileData];
-    for (let i = BOARD_DIMENSIONS; i < newTileData.length; i++){
-      if (newTileData[i-BOARD_DIMENSIONS] === 0 && newTileData[i] === 1){
-        newTileData[i-BOARD_DIMENSIONS] = 1;
-        newTileData[i] = 0;
-      }
-    }
-    return newTileData;
-  }
-
-  const boardDownMove = (prevTileData) => {
-    const newTileData = [...prevTileData];
-    for (let i = newTileData.length - BOARD_DIMENSIONS - 1; i >= 0; i--) {
-      if (newTileData[i + BOARD_DIMENSIONS] === 0 && newTileData[i] === 1) {
-        newTileData[i + BOARD_DIMENSIONS] = 1;
-        newTileData[i] = 0;
-      }
-    }
-    return newTileData;
-  }
 
   const handleKeyDown = (event) => {
     switch (event.key) {
