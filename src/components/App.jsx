@@ -13,11 +13,16 @@ import { getRandomInt, boardLeftMove, boardRightMove, boardDownMove, boardUpMove
 * 2 - Immovable tile
 */
 
+const fooTileData = new Array(BOARD_DIMENSIONS ** 2).fill(null).map(() => getRandomInt(3));
+
 function App() {
   const [moveDirection, setMoveDirection] = useState(null);
-  const [tileData, setTileData] = useState(() =>
-    new Array(BOARD_DIMENSIONS ** 2).fill(null).map(() => getRandomInt(3))
-  );
+  const [tileData, setTileData] = useState(fooTileData);
+  const [initTileData, setInitTileData] = useState(fooTileData);
+
+  const resetTiles = () => {
+    setTileData(initTileData);
+  }
 
   const handleKeyDown = (event) => {
     switch (event.key) {
@@ -57,6 +62,7 @@ function App() {
           <Board/>
         </MoveDirectionContext.Provider>
       </TileDataContext.Provider>
+      <button className={styles.resetBtn} onClick={resetTiles}>RESET</button>
     </div>
   )
 }
