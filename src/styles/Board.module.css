@@ -1,0 +1,10 @@
+.board {
+    aspect-ratio: 1/1;
+    min-width: 35%;
+    border: 1px solid white;
+    padding: 5px;
+
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}

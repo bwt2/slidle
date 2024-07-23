@@ -1,0 +1,19 @@
+.tile {
+    aspect-ratio: 1 / 1;
+
+    box-sizing: border-box;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.movableTile {
+    border: 2px solid grey;
+    margin: 1px;
+}
+
+.immovableTile {
+    border: 1px solid white;
+    background-color: white;
+}
