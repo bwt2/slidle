@@ -59,10 +59,10 @@ function App() {
       <header className={styles.header}>Slidle</header>
       <TileDataContext.Provider value={tileData}>
         <MoveDirectionContext.Provider value={moveDirection}>
-          <Board/>
+          <Board resetTiles={resetTiles}/>
         </MoveDirectionContext.Provider>
       </TileDataContext.Provider>
-      <button className={styles.resetBtn} onClick={resetTiles}>RESET</button>
+      <footer className={styles.footer}>Powered by React.js</footer>
     </div>
   )
 }
