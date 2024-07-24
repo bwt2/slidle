@@ -1,6 +1,7 @@
 import styles from '../styles/Tile.module.css'
 import { useContext } from 'react';
 import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
+import star from '../assets/star.svg';
 
   /* 
   * Board tiles:
@@ -11,6 +12,8 @@ import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
 
 export default function Tile({ index, type }){
     const moveDirection = useContext(MoveDirectionContext);
+    const starBackgroundStyle = { backgroundImage: `url(${star})`};
+
     let tile = null;
     switch (type){
         case 0:
@@ -20,7 +23,7 @@ export default function Tile({ index, type }){
             break;
         case 1:
             tile = (
-                <div className={`${styles.tile} ${styles.movableTile}`}>{index}</div>
+                <div className={`${styles.tile} ${styles.movableTile}`} style={starBackgroundStyle}></div>
             );
             break;
         case 2:

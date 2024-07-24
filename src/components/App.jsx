@@ -3,8 +3,10 @@ import Board from './Board.jsx'
 import React, { useState, useEffect } from 'react';
 import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
 import { TileDataContext } from '../contexts/tileDataContext.jsx';
-import { BOARD_DIMENSIONS } from './constants'
-import { getRandomInt, boardLeftMove, boardRightMove, boardDownMove, boardUpMove } from '../scripts/boardHelpers.jsx';
+import { SolvedContext } from '../contexts/solvedContext.jsx';
+import { boardLeftMove, boardRightMove, boardDownMove, 
+         boardUpMove, generateTileData, generatePathData, 
+         shuffleTiles, checkSolved } from '../scripts/boardHelpers.jsx';
 
 /* 
 * Board tiles:
@@ -13,12 +15,21 @@ import { getRandomInt, boardLeftMove, boardRightMove, boardDownMove, boardUpMove
 * 2 - Immovable tile
 */
 
-const fooTileData = new Array(BOARD_DIMENSIONS ** 2).fill(null).map(() => getRandomInt(3));
+// Generate initial solved state
+const { pathIndex, pathIsCol } = generatePathData();
+const unshuffledTileData = generateTileData(pathIndex, pathIsCol);
+
+// Shuffle the tiles
+let shuffledTileData = shuffleTiles(unshuffledTileData);
+while (checkSolved(shuffledTileData, pathIndex, pathIsCol)){
+    shuffleTileData = shuffleTiles(shuffledTileData);
+}
 
 function App() {
   const [moveDirection, setMoveDirection] = useState(null);
-  const [tileData, setTileData] = useState(fooTileData);
-  const [initTileData, setInitTileData] = useState(fooTileData);
+  const [tileData, setTileData] = useState(shuffledTileData);
+  const [initTileData, setInitTileData] = useState(shuffledTileData);
+  const [solved, setSolved] = useState(false);
 
   const resetTiles = () => {
     setTileData(initTileData);
@@ -54,14 +65,22 @@ function App() {
     };
   }, []);
 
+  useEffect(() =>{
+    if (checkSolved(tileData, pathIndex, pathIsCol)){
+      setSolved(true);
+    }
+  }, [tileData])
+
   return (
     <div className={styles.container}>
       <header className={styles.header}>Slidle</header>
+      <SolvedContext.Provider value={solved}>
       <TileDataContext.Provider value={tileData}>
-        <MoveDirectionContext.Provider value={moveDirection}>
-          <Board resetTiles={resetTiles}/>
-        </MoveDirectionContext.Provider>
+      <MoveDirectionContext.Provider value={moveDirection}>
+        <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
+      </MoveDirectionContext.Provider>
       </TileDataContext.Provider>
+      </SolvedContext.Provider>
       <footer className={styles.footer}>Powered by React.js</footer>
     </div>
   )

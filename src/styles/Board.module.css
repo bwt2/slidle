@@ -16,20 +16,23 @@
     grid-template-rows: repeat(5, 1fr);
 }
 
+.solvedBoard {
+    border: 2px solid lightgreen;
+}
+
+
 .arrow {
     position: absolute;
-    top: calc(-10% - 5px);
+    top: calc(-10%);
     left: calc(5%);
     transform: rotate(180deg);
-
-    margin: 5px;
 
     display: flex;
     justify-content: center;
     align-items: center;
 
     width: 10%;
-    height: 10%;
+    height: auto;
 
     font-size: 3rem;
 }

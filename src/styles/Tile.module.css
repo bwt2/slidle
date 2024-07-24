@@ -6,11 +6,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 1px;
 }
 
 .movableTile {
+    text-align: center;
     border: 2px solid grey;
-    margin: 1px;
+    font-size: 5rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .immovableTile {
