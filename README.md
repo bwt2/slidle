@@ -1,8 +1,8 @@
-# React + Vite
+# Slidle
+A Wordle clone inspired by the standard sliding puzzle minigame written in React.js using Vite.
+- Arrow keys to shift the tiles around.
+- If a clear stright line from the side directional arrow and the edge of the board can be drawn, you win. 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## TODO
+1. Add a new button to do a different puzzle.
+2. Create better board shuffling algorithm to ensure 100% solvability.
