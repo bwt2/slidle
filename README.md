@@ -1,5 +1,5 @@
 # Slidle 🧩
-A Wordle clone inspired by the standard sliding puzzle minigame written in **React.js** using **Vite** deployed on **Vercel**.
+A simple Wordle clone inspired by the standard sliding puzzle minigame written in **React.js** using **Vite** deployed on **Vercel**.
 - Arrow keys to shift the tiles around.
 - If a clear stright line from the side directional arrow and the edge of the board can be drawn, you win. 
 
