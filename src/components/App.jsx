@@ -78,9 +78,8 @@ function App() {
   return (
     <div className={styles.layout}>
       <div className={styles.infoLeft}>
-      Controls<br></br>
-      W A S D<br></br>
-      ↑ ← ↓ →
+      Clear a path <br></br>
+      for the arrow
       </div>
       <div className={styles.container}>
         <header className={styles.header}>Slidle</header>
@@ -98,8 +97,9 @@ function App() {
       </div>
       <div className={styles.infoRight}>
       <span style={{ textDecoration: 'underline' }}></span>
-      Clear a path <br></br>
-      for the arrow
+      Controls<br></br>
+      W A S D<br></br>
+      ↑ ← ↓ →
       </div>
     </div>
 
