@@ -22,7 +22,7 @@ const unshuffledTileData = generateTileData(pathIndex, pathIsCol);
 // Shuffle the tiles
 let shuffledTileData = shuffleTiles(unshuffledTileData);
 while (checkSolved(shuffledTileData, pathIndex, pathIsCol)){
-    shuffleTileData = shuffleTiles(shuffledTileData);
+  shuffleTileData = shuffleTiles(shuffledTileData);
 }
 
 function App() {
@@ -37,18 +37,22 @@ function App() {
 
   const handleKeyDown = (event) => {
     switch (event.key) {
+      case 'w':
       case 'ArrowUp':
         setMoveDirection('up');
         setTileData(prevTileData => boardUpMove(prevTileData));
         break;
+      case 's':
       case 'ArrowDown':
         setMoveDirection('down');
         setTileData(prevTileData => boardDownMove(prevTileData));
         break;
+      case 'a':
       case 'ArrowLeft':
         setMoveDirection('left');
         setTileData(prevTileData => boardLeftMove(prevTileData));
         break;
+      case 'd':
       case 'ArrowRight':
         setMoveDirection('right');
         setTileData(prevTileData => boardRightMove(prevTileData));
@@ -72,17 +76,33 @@ function App() {
   }, [tileData])
 
   return (
-    <div className={styles.container}>
-      <header className={styles.header}>Slidle</header>
-      <SolvedContext.Provider value={solved}>
-      <TileDataContext.Provider value={tileData}>
-      <MoveDirectionContext.Provider value={moveDirection}>
-        <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
-      </MoveDirectionContext.Provider>
-      </TileDataContext.Provider>
-      </SolvedContext.Provider>
-      <footer className={styles.footer}>Powered by React.js</footer>
+    <div className={styles.layout}>
+      <div className={styles.infoLeft}>
+      Controls<br></br>
+      W A S D<br></br>
+      ↑ ← ↓ →
+      </div>
+      <div className={styles.container}>
+        <header className={styles.header}>Slidle</header>
+          <SolvedContext.Provider value={solved}>
+          <TileDataContext.Provider value={tileData}>
+          <MoveDirectionContext.Provider value={moveDirection}>
+            <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
+          </MoveDirectionContext.Provider>
+          </TileDataContext.Provider>
+          </SolvedContext.Provider>
+        <footer className={styles.footer}>
+          Powered by React.js <br></br>
+          <a style={{ textDecoration: 'underline', color: 'white' }} target="_blank" href="https://github.com/bwt2/slidle">GitHub</a>
+        </footer>
+      </div>
+      <div className={styles.infoRight}>
+      <span style={{ textDecoration: 'underline' }}></span>
+      Clear a path <br></br>
+      for the arrow
+      </div>
     </div>
+
   )
 }
 
