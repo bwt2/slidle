@@ -42,11 +42,11 @@
     font-family: "Arial Rounded MT Bold", "Verdana", "Trebuchet MS", sans-serif;
     margin-top: 1rem;
     align-self: center;
-    background-color: darkgrey;
+    background-color: white;
     border: none;
+    padding: 0.5rem;
     font-size: 2rem;
     font-weight: bolder;
-    padding: 1rem;
     border-radius: 0.5rem;
     letter-spacing: 0.05rem;
     font-weight: bold;
