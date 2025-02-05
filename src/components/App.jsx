@@ -15,21 +15,14 @@ import { boardLeftMove, boardRightMove, boardDownMove,
 * 2 - Immovable tile
 */
 
-// Generate initial solved state
-const { pathIndex, pathIsCol } = generatePathData();
-const unshuffledTileData = generateTileData(pathIndex, pathIsCol);
-
-// Shuffle the tiles
-let shuffledTileData = shuffleTiles(unshuffledTileData);
-while (checkSolved(shuffledTileData, pathIndex, pathIsCol)){
-  shuffleTileData = shuffleTiles(shuffledTileData);
-}
-
 function App() {
+  const [pathIndex, setPathIndex] = useState(null);
+  const [pathIsCol, setPathIsCol] = useState(null);
   const [moveDirection, setMoveDirection] = useState(null);
-  const [tileData, setTileData] = useState(shuffledTileData);
-  const [initTileData, setInitTileData] = useState(shuffledTileData);
+  const [tileData, setTileData] = useState(null);
+  const [initTileData, setInitTileData] = useState(null);
   const [solved, setSolved] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const resetTiles = () => {
     setTileData(initTileData);
@@ -63,46 +56,77 @@ function App() {
   };
 
   useEffect(() => {
+    // Generate initial solved state
+    const { pathIndex, pathIsCol } = generatePathData();
+    const unshuffledTileData = generateTileData(pathIndex, pathIsCol);
+
+    // Shuffle the tiles
+    let shuffledTileData = shuffleTiles(unshuffledTileData);
+    while (checkSolved(shuffledTileData, pathIndex, pathIsCol)){
+      shuffledTileData = shuffleTiles(shuffledTileData);
+    }
+
+    setTileData(shuffledTileData);
+    setInitTileData(shuffledTileData);
+    setPathIndex(pathIndex);
+    setPathIsCol(pathIsCol);
+
     window.addEventListener('keydown', handleKeyDown);
+
+    setLoading(false);
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
   useEffect(() =>{
-    if (checkSolved(tileData, pathIndex, pathIsCol)){
-      setSolved(true);
+    if (!loading){
+      if (checkSolved(tileData, pathIndex, pathIsCol)){
+        setSolved(true);
+      }
     }
   }, [tileData])
 
-  return (
+  // <br /> hack
+  return ( 
     <div className={styles.layout}>
+
       <div className={styles.infoLeft}>
-      Clear a path <br></br>
-      for the arrow
+        Clear a path <br/> 
+        for the arrow
       </div>
+
       <div className={styles.container}>
         <header className={styles.header}>Slidle</header>
+
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
           <SolvedContext.Provider value={solved}>
-          <TileDataContext.Provider value={tileData}>
-          <MoveDirectionContext.Provider value={moveDirection}>
-            <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
-          </MoveDirectionContext.Provider>
-          </TileDataContext.Provider>
+            <TileDataContext.Provider value={tileData}>
+              <MoveDirectionContext.Provider value={moveDirection}>
+                <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
+              </MoveDirectionContext.Provider>
+            </TileDataContext.Provider>
           </SolvedContext.Provider>
+        )}
+
         <footer className={styles.footer}>
-          Powered by React.js <br></br>
-          <a style={{ textDecoration: 'underline', color: 'white' }} target="_blank" href="https://github.com/bwt2/slidle">GitHub</a>
+          Powered by React.js <br />
+          <a style={{ textDecoration: 'underline', color: 'white' }} target="_blank" href="https://github.com/bwt2/slidle">
+            GitHub
+          </a>
         </footer>
       </div>
-      <div className={styles.infoRight}>
-      <span style={{ textDecoration: 'underline' }}></span>
-      Controls<br></br>
-      W A S D<br></br>
-      ↑ ← ↓ →
-      </div>
-    </div>
 
+      <div className={styles.infoRight}>
+        <span style={{ textDecoration: 'underline' }}></span>
+        Controls<br/>
+        W A S D<br/>
+        ↑ ← ↓ →
+      </div>
+
+    </div>
   )
 }
 
