@@ -111,6 +111,12 @@ function App() {
           </SolvedContext.Provider>
         )}
 
+        <div className={styles.infoBottom}>
+          Swipe up / down / left / right <br/>
+          Clear a path <br/> 
+          for the arrow
+        </div>
+
         <footer className={styles.footer}>
           Powered by React.js <br />
           <a style={{ textDecoration: 'underline', color: 'white' }} target="_blank" href="https://github.com/bwt2/slidle">

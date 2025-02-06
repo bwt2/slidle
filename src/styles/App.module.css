@@ -56,3 +56,28 @@
     inline-size: 10%;
     overflow-wrap: break-word;
 }
+
+.infoBottom {
+    display: none;
+}
+
+@media (max-width: 500px) {
+    .infoLeft {
+        display: none;
+    }
+    .infoRight {
+        display: none;
+    }
+
+    .layout {
+        background-color: var(--bg-color);
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+
+    .infoBottom {
+        display: block;
+    }
+}
