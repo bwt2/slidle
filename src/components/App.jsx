@@ -121,7 +121,7 @@ function App() {
     <div className={styles.layout}>
 
       <div className={styles.infoLeft}>
-        Clear a path <br/> 
+        Clear a <span style={{ textDecoration: 'underline' }}>straight line</span> path <br/> 
         for the arrow
       </div>
 
@@ -147,7 +147,7 @@ function App() {
 
         <div className={styles.infoBottom}>
           Swipe up / down / left / right <br/>
-          Clear a path <br/> 
+          Clear a <span style={{ textDecoration: 'underline' }}>straight line</span> path <br/> 
           for the arrow
         </div>
 
