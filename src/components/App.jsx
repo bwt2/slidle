@@ -1,7 +1,6 @@
 import styles from '../styles/App.module.css'
 import Board from './Board.jsx'
 import React, { useState, useEffect } from 'react';
-import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
 import { TileDataContext } from '../contexts/tileDataContext.jsx';
 import { SolvedContext } from '../contexts/solvedContext.jsx';
 import { boardLeftMove, boardRightMove, boardDownMove, 
@@ -18,7 +17,6 @@ import { boardLeftMove, boardRightMove, boardDownMove,
 function App() {
   const [pathIndex, setPathIndex] = useState(null);
   const [pathIsCol, setPathIsCol] = useState(null);
-  const [moveDirection, setMoveDirection] = useState(null);
   const [tileData, setTileData] = useState(null);
   const [initTileData, setInitTileData] = useState(null);
   const [solved, setSolved] = useState(false);
@@ -28,26 +26,57 @@ function App() {
     setTileData(initTileData);
   }
 
+  // touchscreen inputs
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchEndX = 0;
+  let touchEndY = 0;
+
+  const handleTouchStart = (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX = e.touches[0].clientX;
+    touchEndY = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = () => {
+    const deltaX = touchEndX - touchStartX;
+    const deltaY = touchEndY - touchStartY;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      if (deltaX > 50) {
+        setTileData(prevTileData => boardRightMove(prevTileData));
+      } else if (deltaX < -50) {
+        setTileData(prevTileData => boardLeftMove(prevTileData));
+      }
+    } else {
+      if (deltaY > 50) {
+        setTileData(prevTileData => boardDownMove(prevTileData));
+      } else if (deltaY < -50) {
+        setTileData(prevTileData => boardUpMove(prevTileData));
+      }
+    }
+  };
+
   const handleKeyDown = (event) => {
     switch (event.key) {
       case 'w':
       case 'ArrowUp':
-        setMoveDirection('up');
         setTileData(prevTileData => boardUpMove(prevTileData));
         break;
       case 's':
       case 'ArrowDown':
-        setMoveDirection('down');
         setTileData(prevTileData => boardDownMove(prevTileData));
         break;
       case 'a':
       case 'ArrowLeft':
-        setMoveDirection('left');
         setTileData(prevTileData => boardLeftMove(prevTileData));
         break;
       case 'd':
       case 'ArrowRight':
-        setMoveDirection('right');
         setTileData(prevTileData => boardRightMove(prevTileData));
         break;
       default:
@@ -104,9 +133,14 @@ function App() {
         ) : (
           <SolvedContext.Provider value={solved}>
             <TileDataContext.Provider value={tileData}>
-              <MoveDirectionContext.Provider value={moveDirection}>
-                <Board resetTiles={resetTiles} pathIndex={pathIndex} pathIsCol={pathIsCol}/>
-              </MoveDirectionContext.Provider>
+                <Board 
+                  resetTiles={resetTiles} 
+                  pathIndex={pathIndex} 
+                  pathIsCol={pathIsCol}
+                  handleTouchStart={handleTouchStart}
+                  handleTouchMove={handleTouchMove}
+                  handleTouchEnd={handleTouchEnd}
+                />
             </TileDataContext.Provider>
           </SolvedContext.Provider>
         )}

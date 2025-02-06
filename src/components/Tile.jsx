@@ -1,6 +1,5 @@
 import styles from '../styles/Tile.module.css'
 import { useContext } from 'react';
-import { MoveDirectionContext } from '../contexts/moveDirectionContext.jsx'
 import { SolvedContext } from '../contexts/solvedContext.jsx';
 
   /* 
@@ -11,7 +10,6 @@ import { SolvedContext } from '../contexts/solvedContext.jsx';
   */
 
 export default function Tile({ index, type }){
-    const moveDirection = useContext(MoveDirectionContext);
     const solved = useContext(SolvedContext);
 
     const solvedClass = solved ? styles.solved : '';

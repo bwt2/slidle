@@ -6,7 +6,7 @@ import { TileDataContext } from '../contexts/tileDataContext.jsx';
 import { SolvedContext } from '../contexts/solvedContext.jsx';
 import { BOARD_DIMENSIONS } from "../components/constants";
 
-export default function Board({ resetTiles, pathIndex, pathIsCol }) {
+export default function Board({ resetTiles, pathIndex, pathIsCol, handleTouchStart, handleTouchMove, handleTouchEnd }) {
     const tileData = useContext(TileDataContext);
     const tiles = tileData.map((typeData, index) => (
         <Tile key={index} 
@@ -28,7 +28,12 @@ export default function Board({ resetTiles, pathIndex, pathIsCol }) {
     };
 
     return (
-    <section className={styles.boardContainer}>
+    <section 
+        className={styles.boardContainer}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+    >
         <img className={styles.arrow} style={arrowPosition} src={direction}/>
         {solved ? (
             <ul className={`${styles.board} ${styles.solvedBoard}`}>
